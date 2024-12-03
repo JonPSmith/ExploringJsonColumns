@@ -3,7 +3,7 @@
 
 using System.ComponentModel.DataAnnotations;
 
-namespace DataLayer.BookAppSql
+namespace DataLayer.BookClasses
 {
     public class Author
     {
@@ -18,8 +18,9 @@ namespace DataLayer.BookAppSql
         //------------------------------
         //Relationships
 
-        public ICollection<BookAuthor> 
-            BooksLink { get; set; }
+        public ICollection<BookAuthor>
+            BooksLink
+        { get; set; }
     }
 
 }

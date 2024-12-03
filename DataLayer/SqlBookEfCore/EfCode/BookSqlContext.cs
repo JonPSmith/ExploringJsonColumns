@@ -2,14 +2,15 @@
 // Licensed under MIT license. See License.txt in the project root for license information.
 
 using DataLayer.BookAppSql.EfCode.Configurations;
+using DataLayer.BookClasses;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataLayer.BookAppSql.EfCode
 {
-    public class BookContext : DbContext
+    public class SqlBookContext : DbContext
     {
-        public BookContext(                             
-            DbContextOptions<BookContext> options)      
+        public SqlBookContext(                             
+            DbContextOptions<SqlBookContext> options)      
             : base(options) {}
 
         public DbSet<Book> Books { get; set; }

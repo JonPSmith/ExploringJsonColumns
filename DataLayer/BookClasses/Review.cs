@@ -3,7 +3,7 @@
 
 using System.ComponentModel.DataAnnotations;
 
-namespace DataLayer.BookAppSql
+namespace DataLayer.BookClasses
 {
     public class Review
     {

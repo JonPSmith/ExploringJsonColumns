@@ -3,9 +3,9 @@
 
 using System.ComponentModel.DataAnnotations;
 
-namespace DataLayer.BookAppSql
+namespace DataLayer.BookClasses
 {
-    public class Book                        
+    public class Book
     {
         public int BookId { get; set; }
 
@@ -32,8 +32,9 @@ namespace DataLayer.BookAppSql
         public PriceOffer Promotion { get; set; }
         public ICollection<Review> Reviews { get; set; }
 
-        public ICollection<BookAuthor> 
-            AuthorsLink { get; set; }
+        public ICollection<BookAuthor>
+            AuthorsLink
+        { get; set; }
     }
     /****************************************************
     #A This tells EF Core that the string is non-nullable.

@@ -4,13 +4,13 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 
-namespace DataLayer.BookAppSql
+namespace DataLayer.BookClasses
 {
     public class LineItem : IValidatableObject //#A
     {
         public int LineItemId { get; set; }
 
-        [Range(1,5, ErrorMessage =                      //#B
+        [Range(1, 5, ErrorMessage =                      //#B
             "This order is over the limit of 5 books.")] //#B
         public byte LineNum { get; set; }
 
@@ -32,7 +32,7 @@ namespace DataLayer.BookAppSql
         IEnumerable<ValidationResult> IValidatableObject.Validate //#C
             (ValidationContext validationContext)                 //#C
         {
-            var currContext = 
+            var currContext =
                 validationContext.GetService(typeof(DbContext));//#D
 
             if (ChosenBook.Price < 0)                      //#E
@@ -41,7 +41,7 @@ $"Sorry, the book '{ChosenBook.Title}' is not for sale."); //#E
 
             if (NumBooks > 100)
                 yield return new ValidationResult(//#F
-"If you want to order a 100 or more books"+       //#F
+"If you want to order a 100 or more books" +       //#F
 " please phone us on 01234-5678-90",              //#F
                     new[] { nameof(NumBooks) });  //#F
         }
