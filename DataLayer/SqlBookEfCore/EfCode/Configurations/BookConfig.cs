@@ -5,7 +5,7 @@ using DataLayer.BookClasses;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace DataLayer.BookAppSql.EfCode.Configurations
+namespace DataLayer.SqlBookEfCore.EfCode.Configurations
 {
     public class BookConfig : IEntityTypeConfiguration<Book>
     {

@@ -1,11 +1,11 @@
 ﻿// Copyright (c) 2024 Jon P Smith, GitHub: JonPSmith, web: http://www.thereformedprogrammer.net/
 // Licensed under MIT license. See License.txt in the project root for license information.
 
-using DataLayer.BookAppSql.EfCode.Configurations;
 using DataLayer.BookClasses;
+using DataLayer.SqlBookEfCore.EfCode.Configurations;
 using Microsoft.EntityFrameworkCore;
 
-namespace DataLayer.BookAppSql.EfCode
+namespace DataLayer.SqlBookEfCore.EfCode
 {
     public class SqlBookContext : DbContext
     {
