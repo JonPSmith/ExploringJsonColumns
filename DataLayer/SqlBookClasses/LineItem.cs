@@ -4,7 +4,7 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 
-namespace DataLayer.BookClasses
+namespace DataLayer.SqlBookClasses
 {
     public class LineItem : IValidatableObject //#A
     {

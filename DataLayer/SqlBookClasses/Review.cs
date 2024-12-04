@@ -3,24 +3,24 @@
 
 using System.ComponentModel.DataAnnotations;
 
-namespace DataLayer.BookClasses
+namespace DataLayer.SqlBookClasses
 {
-    public class Author
+    public class Review
     {
         public const int NameLength = 100;
 
-        public int AuthorId { get; set; }
+        public int ReviewId { get; set; }
 
-        [Required]
         [MaxLength(NameLength)]
-        public string Name { get; set; }
+        public string VoterName { get; set; }
 
-        //------------------------------
+        public int NumStars { get; set; }
+        public string Comment { get; set; }
+
+        //-----------------------------------------
         //Relationships
 
-        public ICollection<BookAuthor>
-            BooksLink
-        { get; set; }
+        public int BookId { get; set; }
     }
 
 }

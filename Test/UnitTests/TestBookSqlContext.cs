@@ -2,8 +2,9 @@
 // Licensed under MIT license. See License.txt in the project root for license information.
 
 using System.Linq;
-using DataLayer.BookClasses;
+using DataLayer.SqlBookClasses;
 using DataLayer.SqlBookEfCore.EfCode;
+using Test.TestHelpers;
 using TestSupport.EfHelpers;
 using Xunit;
 using Xunit.Abstractions;
@@ -21,7 +22,7 @@ public class TestBookSqlContext
     }
 
     [Fact]
-    public void TestExample()
+    public void BasicTestSqlBookContext()
     {
         //SETUP
         var options = this.CreateUniqueClassOptions<SqlBookContext>();
@@ -35,5 +36,22 @@ public class TestBookSqlContext
         //VERIFY
         context.ChangeTracker.Clear();
         context.Books.Count().ShouldEqual(1);
+    }
+
+    [Fact]
+    public void TestSqlBookContext_Many()
+    {
+        //SETUP
+        var options = this.CreateUniqueClassOptions<SqlBookContext>();
+        using var context = new SqlBookContext(options);
+        context.Database.EnsureClean();
+
+        //ATTEMPT
+        context.Books.AddRange(CreateBookData.CreateDummyBooks());
+        context.SaveChanges();
+
+        //VERIFY
+        context.ChangeTracker.Clear();
+        context.Books.Count().ShouldEqual(10);
     }
 }

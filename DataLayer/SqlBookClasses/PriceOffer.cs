@@ -3,7 +3,7 @@
 
 using System.ComponentModel.DataAnnotations;
 
-namespace DataLayer.BookClasses
+namespace DataLayer.SqlBookClasses
 {
     public class PriceOffer
     {
