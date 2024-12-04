@@ -5,7 +5,7 @@ using DataLayer.SqlBookClasses;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace DataLayer.SqlBookEfCore.EfCode.Configurations
+namespace DataLayer.SqlBookEfCore.Configurations
 {
     public class BookConfig : IEntityTypeConfiguration<Book>
     {
@@ -13,7 +13,7 @@ namespace DataLayer.SqlBookEfCore.EfCode.Configurations
             (EntityTypeBuilder<Book> entity)
         {
             entity.Property(p => p.PublishedOn)//#A
-                .HasColumnType("date");        
+                .HasColumnType("date");
 
             entity.Property(p => p.Price) //#B
                 .HasColumnType("decimal(9,2)");

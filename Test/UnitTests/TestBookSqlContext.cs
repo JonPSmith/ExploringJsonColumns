@@ -1,12 +1,10 @@
 ﻿// Copyright (c) 2024 Jon P Smith, GitHub: JonPSmith, web: http://www.thereformedprogrammer.net/
 // Licensed under MIT license. See License.txt in the project root for license information.
 
-using System.Linq;
 using DataLayer.SqlBookClasses;
-using DataLayer.SqlBookEfCore.EfCode;
+using DataLayer.SqlBookEfCore;
 using Test.TestHelpers;
 using TestSupport.EfHelpers;
-using Xunit;
 using Xunit.Abstractions;
 using Xunit.Extensions.AssertExtensions;
 
@@ -16,10 +14,7 @@ public class TestBookSqlContext
 {
     private readonly ITestOutputHelper _output;
 
-    public TestBookSqlContext(ITestOutputHelper output)
-    {
-        _output = output;
-    }
+    public TestBookSqlContext(ITestOutputHelper output) => _output = output;
 
     [Fact]
     public void BasicTestSqlBookContext()
@@ -47,7 +42,7 @@ public class TestBookSqlContext
         context.Database.EnsureClean();
 
         //ATTEMPT
-        context.Books.AddRange(CreateBookData.CreateDummyBooks());
+        context.Books.AddRange(CreateSqlBookData.CreateDummyBooks());
         context.SaveChanges();
 
         //VERIFY

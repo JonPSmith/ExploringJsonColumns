@@ -5,25 +5,25 @@ using DataLayer.SqlBookClasses;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace DataLayer.SqlBookEfCore.EfCode.Configurations
+namespace DataLayer.SqlBookEfCore.Configurations
 {
     public class BookAuthorConfig : IEntityTypeConfiguration<BookAuthor>
     {
         public void Configure
             (EntityTypeBuilder<BookAuthor> entity)
         {
-            entity.HasKey(p => 
+            entity.HasKey(p =>
                 new { p.BookId, p.AuthorId });
 
             //-----------------------------
             //Relationships
 
-            entity.HasOne(pt => pt.Book)        
-                .WithMany(p => p.AuthorsLink)   
+            entity.HasOne(pt => pt.Book)
+                .WithMany(p => p.AuthorsLink)
                 .HasForeignKey(pt => pt.BookId);
 
-            entity.HasOne(pt => pt.Author)        
-                .WithMany(t => t.BooksLink)       
+            entity.HasOne(pt => pt.Author)
+                .WithMany(t => t.BooksLink)
                 .HasForeignKey(pt => pt.AuthorId);
         }
     }

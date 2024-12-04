@@ -5,7 +5,7 @@ using DataLayer.SqlBookClasses;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace DataLayer.SqlBookEfCore.EfCode.Configurations
+namespace DataLayer.SqlBookEfCore.Configurations
 {
     public class LineItemConfig : IEntityTypeConfiguration<LineItem>
     {
