@@ -7,7 +7,7 @@ namespace DataLayer.JsonBookClasses;
 
 public class JsonPriceOffer
 {
-    [Column(TypeName = "decimal(5, 2)")]
+    [Column(TypeName = "decimal(9,2)")]
     public decimal NewPrice { get; set; }
 
     public string PromotionalText { get; set; }

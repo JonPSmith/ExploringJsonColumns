@@ -2,12 +2,63 @@
 // Licensed under MIT license. See License.txt in the project root for license information.
 
 using DataLayer.JsonBookClasses;
+using DataLayer.SqlBookClasses;
 
 namespace Test.TestHelpers;
 
 public class CreateJsonBookData
 {
     public static readonly DateTime DummyBookStartDate = new DateTime(2010, 1, 1);
+
+
+    /// <summary>
+    /// This converts a Sql Book and its supporting links.
+    /// NOTE: The <see cref="List&lt;Book&gt;"/> must have the other entities 
+    /// </summary>
+    /// <param name="slqBooks"></param>
+    /// <returns></returns>
+    public static List<BookTop> ConvertSqlBookToJsonBook(List<Book> slqBooks)
+    {
+        var result = new List<BookTop>();
+        foreach (var slqBook in slqBooks)
+        {
+            //Copy over the simple properties
+            var bookData = new JsonBookData
+            {
+                Title = slqBook.Title,
+                Description = slqBook.Description,
+                Price = slqBook.Price,
+                ImageUrl = slqBook.ImageUrl,
+                PublishedOn = slqBook.PublishedOn,
+                Authors = slqBook.AuthorsLink.Select(x => new JsonAuthor{AuthorName = x.Author.Name}).ToList(),
+                
+
+            };
+            if (slqBook.Reviews != null)
+            {
+                bookData.Reviews = slqBook.Reviews.Select(x => new JsonReview
+                    {
+                        VoterName = x.VoterName,
+                        NumStars = x.NumStars,
+                        Comment = x.Comment
+                    }
+                ).ToList();
+            }
+            if (slqBook.Promotion != null)
+            {
+                bookData.PriceOffer = new JsonPriceOffer
+                {
+                    NewPrice = slqBook.Promotion.NewPrice,
+                    PromotionalText = slqBook.Promotion.PromotionalText
+                };
+            }
+
+            result.Add(new BookTop{BookData = bookData});
+        }
+
+        return result;
+    }
+
 
     public static List<BookTop> CreateDummyBooks(int numBooks = 10)
     {

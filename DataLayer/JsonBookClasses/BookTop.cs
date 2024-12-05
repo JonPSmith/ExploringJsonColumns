@@ -1,6 +1,7 @@
 ﻿// Copyright (c) 2024 Jon P Smith, GitHub: JonPSmith, web: http://www.thereformedprogrammer.net/
 // Licensed under MIT license. See License.txt in the project root for license information.
 
+using DataLayer.SqlBookClasses;
 
 namespace DataLayer.JsonBookClasses;
 
@@ -20,9 +21,10 @@ public class BookTop
 
     public override string ToString()
     {
-        return $"Title: {BookData.Title}: " +
-        $"Price: {BookData.Price} {GetOfferPrice()} " +
-               $"Authors: {String.Join(", ", BookData.Authors.ToArray().SelectMany(x => x.AuthorName))}, " +
-               $"Review stars: {(BookData.Reviews.Count > 0 ? BookData.Reviews.Average(x => x.NumStars) : 0)} ";
+        string result = $"Title: {BookData.Title}, " +
+                        $"Price: {BookData.Price}{GetOfferPrice()}, " +
+                        $"Authors: {String.Join(", ", BookData.Authors.Select(x => x.AuthorName))}, " +
+                        $"Review stars: {(BookData.Reviews == null ? "No reviews" :BookData.Reviews.Average(x => x.NumStars).ToString("F"))} ";
+        return result;
     }
 }

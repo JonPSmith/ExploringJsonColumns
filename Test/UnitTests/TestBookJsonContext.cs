@@ -39,7 +39,7 @@ public class TestBookJsonContext
     {
         //SETUP
         var logs = new List<string>();
-        var options = this.CreateUniqueClassOptionsWithLogTo<BookJsonContext>(log => logs.Add(log));
+        var options = this.CreateUniqueClassOptionsWithLogTo<BookJsonContext>(logs.Add);
         using var context = new BookJsonContext(options);
         context.Database.EnsureClean();
 
@@ -47,13 +47,11 @@ public class TestBookJsonContext
         context.Books.AddRange(CreateJsonBookData.CreateDummyBooks());
         context.SaveChanges();
 
-
-
         //VERIFY
-        foreach (var log in logs)
-        {
-            _output.WriteLine(log);
-        }
+        // foreach (var log in logs)
+        // {
+        //     _output.WriteLine(log);
+        // }
 
         context.ChangeTracker.Clear();
         context.Books.Count().ShouldEqual(10);
@@ -61,6 +59,28 @@ public class TestBookJsonContext
         {
           _output.WriteLine(bookTop.ToString());
         }
+    }
 
+    [Fact]
+    public void TestBookJsonContext_FourBooksAllData()
+    {
+        //SETUP
+        var options = this.CreateUniqueClassOptions<BookJsonContext>();
+        using var context = new BookJsonContext(options);
+        context.Database.EnsureClean();
+
+        var slqBooks = CreateSqlBookData.CreateFourBooks();
+
+        //ATTEMPT
+        context.Books.AddRange(CreateJsonBookData.ConvertSqlBookToJsonBook(slqBooks));
+        context.SaveChanges();
+
+        //VERIFY
+        context.ChangeTracker.Clear();
+        context.Books.Count().ShouldEqual(4);
+        foreach (var bookTop in context.Books)
+        {
+            _output.WriteLine(bookTop.ToString());
+        }
     }
 }
