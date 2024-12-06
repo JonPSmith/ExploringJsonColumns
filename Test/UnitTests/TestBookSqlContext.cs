@@ -3,6 +3,7 @@
 
 using DataLayer.SqlBookClasses;
 using DataLayer.SqlBookEfCore;
+using Microsoft.EntityFrameworkCore;
 using Test.TestHelpers;
 using TestSupport.EfHelpers;
 using Xunit.Abstractions;
@@ -48,5 +49,26 @@ public class TestBookSqlContext
         //VERIFY
         context.ChangeTracker.Clear();
         context.Books.Count().ShouldEqual(10);
+    }
+
+    [Fact]
+    public void TestSqlBookContext_FourBooksAllData()
+    {
+        //SETUP
+        var options = this.CreateUniqueClassOptions<SqlBookContext>();
+        using var context = new SqlBookContext(options);
+        context.Database.EnsureClean();
+
+        //ATTEMPT
+        context.Books.AddRange(CreateSqlBookData.CreateFourBooks());
+        context.SaveChanges();
+
+        //VERIFY
+        context.ChangeTracker.Clear();
+        context.Books.Count().ShouldEqual(4);
+        foreach (var book in context.Books.Include(x => x.Authors))
+        {
+            _output.WriteLine($"{book.Title}, Price {book.Price}, Author: {book.Authors.First().Name}");
+        }
     }
 }

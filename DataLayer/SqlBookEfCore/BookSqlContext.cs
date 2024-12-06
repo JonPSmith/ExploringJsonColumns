@@ -2,28 +2,18 @@
 // Licensed under MIT license. See License.txt in the project root for license information.
 
 using DataLayer.SqlBookClasses;
-using DataLayer.SqlBookEfCore.Configurations;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataLayer.SqlBookEfCore;
 
 public class SqlBookContext : DbContext
 {
-    public SqlBookContext(
-        DbContextOptions<SqlBookContext> options)
+    public SqlBookContext(DbContextOptions<SqlBookContext> options)
         : base(options) { }
 
     public DbSet<Book> Books { get; set; }
     public DbSet<Author> Authors { get; set; }
     public DbSet<PriceOffer> PriceOffers { get; set; }
-
-    protected override void
-        OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.ApplyConfiguration(new BookConfig());
-        modelBuilder.ApplyConfiguration(new BookAuthorConfig());
-        modelBuilder.ApplyConfiguration(new PriceOfferConfig());
-    }
 }
 
 /******************************************************************************

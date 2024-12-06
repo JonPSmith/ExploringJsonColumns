@@ -20,12 +20,15 @@ public class JsonBookData
 
     public string ImageUrl { get; set; }
 
+    public List<JsonAuthor> Authors { get; set; }
+
     /// <summary>
     /// PriceOffer can be null
     /// </summary>
     public JsonPriceOffer PriceOffer { get; set; }
 
-    public List<JsonAuthor> Authors { get; set; }
-
+    /// <summary>
+    /// Reviews can be null
+    /// </summary>
     public List<JsonReview> Reviews { get; set; }
 }

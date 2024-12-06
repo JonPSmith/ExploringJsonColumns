@@ -2,6 +2,7 @@
 // Licensed under MIT license. See License.txt in the project root for license information.
 
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataLayer.SqlBookClasses
 {
@@ -10,6 +11,8 @@ namespace DataLayer.SqlBookClasses
         public const int PromotionalTextLength = 200;
 
         public int PriceOfferId { get; set; }
+
+        [Column(TypeName = "decimal(9,2)")]
         public decimal NewPrice { get; set; }
 
         [Required]

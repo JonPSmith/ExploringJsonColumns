@@ -30,7 +30,7 @@ public class CreateJsonBookData
                 Price = slqBook.Price,
                 ImageUrl = slqBook.ImageUrl,
                 PublishedOn = slqBook.PublishedOn,
-                Authors = slqBook.AuthorsLink.Select(x => new JsonAuthor{AuthorName = x.Author.Name}).ToList(),
+                Authors = slqBook.Authors.Select(x => new JsonAuthor{AuthorName = x.Name}).ToList(),
                 
 
             };

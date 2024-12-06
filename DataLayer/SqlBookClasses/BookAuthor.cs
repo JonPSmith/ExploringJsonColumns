@@ -1,12 +1,16 @@
 ﻿// Copyright (c) 2024 Jon P Smith, GitHub: JonPSmith, web: http://www.thereformedprogrammer.net/
 // Licensed under MIT license. See License.txt in the project root for license information.
 
+using System.ComponentModel.DataAnnotations;
+
 namespace DataLayer.SqlBookClasses
 {
     public class BookAuthor
     {
-        public int BookId { get; set; }  //#A
-        public int AuthorId { get; set; }//#A
+        [Key]
+        public int BookId { get; set; }
+        [Key]
+        public int AuthorId { get; set; }
         public byte Order { get; set; }
 
         //-----------------------------
@@ -15,8 +19,4 @@ namespace DataLayer.SqlBookClasses
         public Book Book { get; set; }
         public Author Author { get; set; }
     }
-    /************************************************************
-    A# The primary key is make up of the two foreign keys
-     * ********************************************************/
-
 }

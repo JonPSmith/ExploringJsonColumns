@@ -2,6 +2,7 @@
 // Licensed under MIT license. See License.txt in the project root for license information.
 
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataLayer.SqlBookClasses;
 
@@ -10,33 +11,27 @@ public class Book
     public int BookId { get; set; }
 
     [Required] //#A
-    [MaxLength(256)] //#B
+    [MaxLength(256)] 
     public string Title { get; set; }
 
     public string Description { get; set; }
+
+    [Column(TypeName = "date")]
     public DateTime PublishedOn { get; set; }
 
-    [MaxLength(64)] //#B
+    [MaxLength(64)] 
     public string Publisher { get; set; }
 
+    [Column(TypeName = "decimal(9,2)")]
     public decimal Price { get; set; }
 
-    [MaxLength(512)] //#B
+    [MaxLength(512)] 
     public string ImageUrl { get; set; }
-
-    public bool SoftDeleted { get; set; }
 
     //-----------------------------------------------
     //relationships
 
     public PriceOffer Promotion { get; set; }
     public ICollection<Review> Reviews { get; set; }
-
-    public ICollection<BookAuthor>
-        AuthorsLink
-    { get; set; }
+    public ICollection<Author> Authors { get; set; }
 }
-/****************************************************
-#A This tells EF Core that the string is non-nullable.
-#B The [MaxLength] attibute defines the the size of the string column in the database
- * **************************************************/
