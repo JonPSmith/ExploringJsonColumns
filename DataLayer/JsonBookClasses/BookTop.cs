@@ -23,8 +23,10 @@ public class BookTop
     {
         string result = $"Title: {BookData.Title}, " +
                         $"Price: {BookData.Price}{GetOfferPrice()}, " +
-                        $"Authors: {String.Join(", ", BookData.Authors.Select(x => x.AuthorName))}, " +
-                        $"Review stars: {(BookData.Reviews == null ? "No reviews" :BookData.Reviews.Average(x => x.NumStars).ToString("F"))} ";
+                        $"Authors: {String.Join(", ", BookData.Authors.Select(x => x.AuthorName))}, " + 
+                        $"Review stars: {
+                            (BookData.Reviews == null || !BookData.Reviews.Any() ? "No reviews" 
+                                : BookData.Reviews.Average(x => x.NumStars).ToString("F"))} ";
         return result;
     }
 }

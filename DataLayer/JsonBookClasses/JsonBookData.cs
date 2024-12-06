@@ -11,7 +11,7 @@ public class JsonBookData
 
     public string Description { get; set; }
 
-    public DateTime PublishedOn { get; set; }
+    public DateOnly PublishedOn { get; set; }
 
     public string Publisher { get; set; }
 

@@ -8,8 +8,7 @@ namespace Test.TestHelpers;
 
 public class CreateJsonBookData
 {
-    public static readonly DateTime DummyBookStartDate = new DateTime(2010, 1, 1);
-
+    private static readonly int startYear = 2010 ;
 
     /// <summary>
     /// This converts a Sql Book and its supporting links.
@@ -83,7 +82,7 @@ public class CreateJsonBookData
                 Description = $"Book{i:D4} Description",
                 Price = (short)(i + 1),
                 ImageUrl = $"Image{i:D4}",
-                PublishedOn = DummyBookStartDate.AddYears(i),
+                PublishedOn = new DateOnly(startYear + i, 1,1),
                 Reviews = reviews,
                 Authors = authors
             };

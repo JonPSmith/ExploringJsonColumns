@@ -2,13 +2,12 @@
 // Licensed under MIT license. See License.txt in the project root for license information.
 
 using DataLayer.SqlBookClasses;
-using static System.Reflection.Metadata.BlobBuilder;
 
 namespace Test.TestHelpers;
 
 public class CreateSqlBookData
 {
-    public static readonly DateTime DummyBookStartDate = new DateTime(2010, 1, 1);
+    public static readonly DateOnly DummyBookStartDate = new DateOnly(2010, 1, 1);
 
     public static List<Book> CreateDummyBooks(int numBooks = 10)
     {
@@ -56,7 +55,7 @@ public class CreateSqlBookData
         {
             Title = "Refactoring",
             Description = "Improving the design of existing code",
-            PublishedOn = new DateTime(1999, 7, 8),
+            PublishedOn = new DateOnly(1999, 7, 8),
             Price = 40
         };
 
@@ -66,7 +65,7 @@ public class CreateSqlBookData
         {
             Title = "Patterns of Enterprise Application Architecture",
             Description = "Written in direct response to the stiff challenges",
-            PublishedOn = new DateTime(2002, 11, 15),
+            PublishedOn = new DateOnly(2002, 11, 15),
             Price = 53
         };
 
@@ -83,7 +82,7 @@ public class CreateSqlBookData
         {
             Title = "Domain-Driven Design",
             Description = "Linking business needs to software design",
-            PublishedOn = new DateTime(2003, 8, 30),
+            PublishedOn = new DateOnly(2003, 8, 30),
             Price = 56
         };
         book3.Authors = new List<Author>
@@ -96,7 +95,7 @@ public class CreateSqlBookData
         {
             Title = "Quantum Networking",
             Description = "Entangled quantum networking provides faster-than-light data communications",
-            PublishedOn = new DateTime(2057, 1, 1),
+            PublishedOn = new DateOnly(2057, 1, 1),
             Price = 220
         };
         book4.Authors = new List<Author>

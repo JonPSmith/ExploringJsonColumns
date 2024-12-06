@@ -16,8 +16,7 @@ public class Book
 
     public string Description { get; set; }
 
-    [Column(TypeName = "date")]
-    public DateTime PublishedOn { get; set; }
+    public DateOnly PublishedOn { get; set; }
 
     [MaxLength(64)] 
     public string Publisher { get; set; }
