@@ -18,7 +18,7 @@ namespace DataLayer.SqlBookClasses
         //------------------------------
         //Relationships
 
-        public ICollection<Book> Books { get; set; }
+        public ICollection<BookAuthor> BooksLink { get; set; }
     }
 
 }

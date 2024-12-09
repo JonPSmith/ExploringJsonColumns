@@ -14,6 +14,13 @@ public class SqlBookContext : DbContext
     public DbSet<Book> Books { get; set; }
     public DbSet<Author> Authors { get; set; }
     public DbSet<PriceOffer> PriceOffers { get; set; }
+
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder) //#E
+    {
+        modelBuilder.Entity<BookAuthor>()
+            .HasKey(x => new { x.BookId, x.AuthorId });
+    }
 }
 
 /******************************************************************************

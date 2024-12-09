@@ -32,5 +32,5 @@ public class Book
 
     public PriceOffer Promotion { get; set; }
     public ICollection<Review> Reviews { get; set; }
-    public ICollection<Author> Authors { get; set; }
+    public ICollection<BookAuthor> AuthorsLink { get; set; }
 }
