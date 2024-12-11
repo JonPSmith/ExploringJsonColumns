@@ -26,7 +26,8 @@ public class BookTop
                         $"Authors: {String.Join(", ", BookData.Authors.Select(x => x.AuthorName))}, " + 
                         $"Review stars: {
                             (BookData.Reviews == null || !BookData.Reviews.Any() ? "No reviews" 
-                                : BookData.Reviews.Average(x => x.NumStars).ToString("F"))} ";
+                                : BookData.Reviews.Average(x => x.NumStars).ToString("F"))}, " +
+                        $"ImageUrl {BookData.ImageUrl}";
         return result;
     }
 }

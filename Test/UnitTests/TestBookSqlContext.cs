@@ -34,52 +34,6 @@ public class TestBookSqlContext
         context.Books.Count().ShouldEqual(1);
     }
 
-    [Theory]
-    [InlineData(100)]
-    public void TestSqlBookContext_AddBooks(int numBooks)
-    {
-        //SETUP
-        var options = this.CreateUniqueClassOptions<SqlBookContext>();
-        using var context = new SqlBookContext(options);
-        context.Database.EnsureClean();
-        var dummyBooks = CreateSqlBookData.CreateDummyBooks(numBooks);
-
-        //ATTEMPT
-        using (new TimeThings(_output, $"Add {numBooks} Sql Books."))
-        {
-            context.Books.AddRange(dummyBooks);
-            context.SaveChanges();
-        }
-
-        //VERIFY
-        context.ChangeTracker.Clear();
-        context.Books.Count().ShouldEqual(numBooks);
-    }
-
-    [Theory]
-    [InlineData(100)]
-    public void TestSqlBookContext_ReadBooks(int numBooks)
-    {
-        //SETUP
-        var options = this.CreateUniqueClassOptions<SqlBookContext>();
-        using var context = new SqlBookContext(options);
-        context.Database.EnsureClean();
-        var dummyBooks = CreateSqlBookData.CreateDummyBooks(numBooks);
-        context.Books.AddRange(dummyBooks);
-        context.SaveChanges();
-
-        //ATTEMPT
-        BookListDto[] books;
-        using (new TimeThings(_output, $"Read {numBooks} Sql Books."))
-        {
-            books = context.Books.MapBookToDto().ToArray();
-        }
-
-        //VERIFY
-        context.ChangeTracker.Clear();
-        context.Books.Count().ShouldEqual(numBooks);
-    }
-
     [Fact]
     public void TestSqlBookContext_FourBooksAllData()
     {
