@@ -25,7 +25,7 @@ public class JsonBookData
     /// <summary>
     /// PriceOffer can be null
     /// </summary>
-    public JsonPriceOffer PriceOffer { get; set; }
+    public JsonPriceOffer Promotion { get; set; }
 
     /// <summary>
     /// Reviews can be null

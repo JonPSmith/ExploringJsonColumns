@@ -1,7 +1,6 @@
 ﻿// Copyright (c) 2024 Jon P Smith, GitHub: JonPSmith, web: http://www.thereformedprogrammer.net/
 // Licensed under MIT license. See License.txt in the project root for license information.
 
-using DataLayer.JsonBookClasses;
 using DataLayer.JsonBookEfCore;
 using Test.TestHelpers;
 using TestSupport.EfHelpers;
@@ -54,10 +53,10 @@ public class PerfBookJsonContext
         context.SaveChanges();
 
         //ATTEMPT
-        string[] books;
+        List<BookListDto> books;
         using (new TimeThings(_output, $"Read {numBooks} Sql Books."))
         {
-            books = context.Books.Select(x => x.ToString()).ToArray();
+            books = context.Books.ToList().MapBookTopToDto().ToList();
         }
 
         //VERIFY
@@ -80,18 +79,20 @@ public class PerfBookJsonContext
         context.ChangeTracker.Clear();
 
         //ATTEMPT
-        BookTop[] books;
+        List<BookListDto> bookDtos;
         using (new TimeThings(_output, $"OrderByStars {numBooks} Sql Books."))
         {
-            books = context.Books.ToList().OrderBy(x => x.BookData.StarsValue()).ToArray();
+            bookDtos = context.Books.ToList().MapBookTopToDto().ToList().OrderBy(x => x.ReviewsAverageVotes).ToList();
         }
 
         //VERIFY
-        double lastStar = 0.0;
-        foreach (var book in books)
+        double? lastStar = null;
+        foreach (var bookDto in bookDtos)
         {
-            (book.BookData.StarsValue() >= lastStar).ShouldBeTrue($"{book.BookData.Title}");
-            lastStar = book.BookData.StarsValue();
+            (bookDto.ReviewsAverageVotes == null 
+                ? lastStar == null 
+                : bookDto.ReviewsAverageVotes >= (lastStar ?? 0)).ShouldBeTrue("{bookDto.Title}");
+            lastStar = bookDto.ReviewsAverageVotes;
         }
         context.Books.Count().ShouldEqual(numBooks);
     }

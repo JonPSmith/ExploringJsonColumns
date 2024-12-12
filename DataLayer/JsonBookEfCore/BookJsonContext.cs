@@ -20,7 +20,7 @@ public class BookJsonContext : DbContext
             headEntry => headEntry.BookData, ownedNavigationBuilder =>
             {
                 ownedNavigationBuilder.ToJson();
-                ownedNavigationBuilder.OwnsOne(x => x.PriceOffer);
+                ownedNavigationBuilder.OwnsOne(x => x.Promotion);
                 ownedNavigationBuilder.OwnsMany(x => x.Authors);
                 ownedNavigationBuilder.OwnsMany(x => x.Reviews);
             });

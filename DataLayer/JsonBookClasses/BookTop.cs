@@ -16,7 +16,7 @@ public class BookTop
 
     private string GetOfferPrice()
     {
-        return BookData.PriceOffer != null ? $", but on sale at {BookData.PriceOffer.NewPrice}" : "";
+        return BookData.Promotion != null ? $", but on sale at {BookData.Promotion.NewPrice}" : "";
     }
 
     public override string ToString()

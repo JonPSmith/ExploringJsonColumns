@@ -6,7 +6,7 @@ using DataLayer.SqlBookClasses;
 
 namespace Test.TestHelpers;
 
-public class CreateJsonBookData
+public static class CreateJsonBookData
 {
     private static readonly int startYear = 2010 ;
 
@@ -16,7 +16,7 @@ public class CreateJsonBookData
     /// </summary>
     /// <param name="slqBooks"></param>
     /// <returns></returns>
-    public static List<BookTop> ConvertSqlBookToJsonBook(List<Book> slqBooks)
+    public static List<BookTop> ConvertSqlBookToJsonBook(this List<Book> slqBooks)
     {
         var result = new List<BookTop>();
         foreach (var slqBook in slqBooks)
@@ -45,7 +45,7 @@ public class CreateJsonBookData
             }
             if (slqBook.Promotion != null)
             {
-                bookData.PriceOffer = new JsonPriceOffer
+                bookData.Promotion = new JsonPriceOffer
                 {
                     NewPrice = slqBook.Promotion.NewPrice,
                     PromotionalText = slqBook.Promotion.PromotionalText

@@ -6,7 +6,7 @@ using DataLayer.SqlBookClasses;
 
 namespace Test.TestHelpers;
 
-public class CreateSqlBookData
+public static class CreateSqlBookData
 {
     public static readonly DateOnly DummyBookStartDate = new DateOnly(2010, 1, 1);
 

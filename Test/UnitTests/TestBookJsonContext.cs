@@ -1,13 +1,10 @@
 ﻿// Copyright (c) 2024 Jon P Smith, GitHub: JonPSmith, web: http://www.thereformedprogrammer.net/
 // Licensed under MIT license. See License.txt in the project root for license information.
 
-using System.Runtime.InteropServices;
 using DataLayer.JsonBookClasses;
 using DataLayer.JsonBookEfCore;
-using DataLayer.SqlBookEfCore;
 using Test.TestHelpers;
 using TestSupport.EfHelpers;
-using Xunit;
 using Xunit.Abstractions;
 using Xunit.Extensions.AssertExtensions;
 
@@ -36,51 +33,31 @@ public class TestBookJsonContext
         context.Books.Count().ShouldEqual(1);
     }
 
-    [Theory]
-    [InlineData(100)]
-    public void TestBookJsonContext_AddMany(int numBooks)
-    {
-        //SETUP
-        var logs = new List<string>();
-        var options = this.CreateUniqueClassOptionsWithLogTo<BookJsonContext>(logs.Add);
-        using var context = new BookJsonContext(options);
-        context.Database.EnsureClean();
-        var dummyBooks = CreateJsonBookData.CreateDummyBooks(numBooks);
-
-        //ATTEMPT
-        using (new TimeThings(_output, $"Add {numBooks} Sql Books."))
-        {
-            context.Books.AddRange(dummyBooks);
-            context.SaveChanges();
-        }
-
-        //VERIFY
-        context.ChangeTracker.Clear();
-        context.Books.Count().ShouldEqual(numBooks);
-    }
-
-    [Theory]
-    [InlineData(100)]
-    public void TestBookJsonContext_ReadBooks(int numBooks)
+    [Fact]
+    public void TestJsonBookContext_FourBooksAllData()
     {
         //SETUP
         var options = this.CreateUniqueClassOptions<BookJsonContext>();
         using var context = new BookJsonContext(options);
         context.Database.EnsureClean();
-        var dummyBooks = CreateJsonBookData.CreateDummyBooks(numBooks);
-        context.Books.AddRange(dummyBooks);
-        context.SaveChanges();
+        var fourBooks = CreateJsonBookData.ConvertSqlBookToJsonBook(CreateSqlBookData.CreateFourBooks());
 
         //ATTEMPT
-        string[] books;
-        using (new TimeThings(_output, $"Read {numBooks} Sql Books."))
-        {
-            books = context.Books.Select(x => x.ToString()).ToArray();
-        }
+        context.Books.AddRange(fourBooks);
+        context.SaveChanges();
 
         //VERIFY
         context.ChangeTracker.Clear();
-        context.Books.Count().ShouldEqual(numBooks);
+        context.Books.Count().ShouldEqual(4);
+
+        foreach (var dto in context.Books.ToList().MapBookTopToDto())
+        {
+            string stars = dto.ReviewsCount == 0
+                ? "No reviews"
+                : $"NumReviews: {dto.ReviewsCount}, Stars: {((double)dto.ReviewsAverageVotes):0.00} ";
+            _output.WriteLine($"{dto.Title}, Price {dto.ActualPrice}, Authors: {dto.AuthorsOrdered}, " +
+                              $"Reviews: {stars}");
+        }
     }
 
 }
