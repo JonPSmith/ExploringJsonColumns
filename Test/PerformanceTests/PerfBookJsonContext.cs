@@ -56,7 +56,7 @@ public class PerfBookJsonContext
         List<BookListDto> books;
         using (new TimeThings(_output, $"Read {numBooks} Sql Books."))
         {
-            books = context.Books.ToList().MapBookTopToDto().ToList();
+            books = context.Books.MapBookTopToDto().ToList();
         }
 
         //VERIFY
@@ -82,7 +82,7 @@ public class PerfBookJsonContext
         List<BookListDto> bookDtos;
         using (new TimeThings(_output, $"OrderByStars {numBooks} Sql Books."))
         {
-            bookDtos = context.Books.ToList().MapBookTopToDto().ToList().OrderBy(x => x.ReviewsAverageVotes).ToList();
+            bookDtos = context.Books.MapBookTopToDto().ToList().OrderBy(x => x.ReviewsAverageVotes).ToList();
         }
 
         //VERIFY

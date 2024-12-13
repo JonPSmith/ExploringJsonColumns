@@ -8,13 +8,12 @@ namespace Test.TestHelpers;
 
 public static class MapJsonBooks
 {
-    public static List<BookListDto>
-        MapBookTopToDto(this List<BookTop> books)
+    public static IEnumerable<BookListDto>
+        MapBookTopToDto(this IEnumerable<BookTop> books)
     {
-        var dtos = new List<BookListDto>();
         foreach (var bookTop in books)
         {
-            dtos.Add(new BookListDto
+            yield return new BookListDto
             {
                 BookId = bookTop.Id,
                 Title = bookTop.BookData.Title,
@@ -29,9 +28,7 @@ public static class MapJsonBooks
                 ReviewsAverageVotes = (bookTop.BookData.Reviews == null || !bookTop.BookData.Reviews.Any()
                     ? null
                     : bookTop.BookData.Reviews.Average(x => x.NumStars))
-            });
+            };
         }
-
-        return dtos;
     }
 }
