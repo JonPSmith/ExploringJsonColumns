@@ -4,6 +4,7 @@
 using DataLayer.SqlBookClasses;
 using DataLayer.SqlBookEfCore;
 using Microsoft.EntityFrameworkCore;
+using Test.MappingCode;
 using Test.TestHelpers;
 using TestSupport.EfHelpers;
 using Xunit.Abstractions;

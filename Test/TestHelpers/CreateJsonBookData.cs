@@ -58,38 +58,15 @@ public static class CreateJsonBookData
         return result;
     }
 
-
-    public static List<BookTop> CreateDummyBooks(int numBooks = 10)
+    /// <summary>
+    /// Creates dummy books
+    /// </summary>
+    /// <param name="numBooks">number of books to return</param>
+    /// <param name="commonAuthorRatio">This creates a CommonAuthor every numBooks / commonAuthorRatio</param>
+    /// <returns></returns>
+    public static List<BookTop> CreateJsonDummyBooks(int numBooks, int commonAuthorRatio = 10)
     {
-        var result = new List<BookTop>();
-        var commonAuthor = "CommonAuthor";
-        for (int i = 0; i < numBooks; i++)
-        {
-            var reviews = new List<JsonReview>();
-            for (int j = 0; j < i; j++)
-            {
-                reviews.Add(new JsonReview { VoterName = j.ToString(), NumStars = (j % 5) + 1 });
-            }
-
-            var authors = new List<JsonAuthor>
-            {
-                new JsonAuthor { AuthorName = $"Author{i:D4}" },
-                new JsonAuthor { AuthorName = commonAuthor }
-            };
-            var bookData = new JsonBookData
-            {
-                Title = $"Book{i:D4} Title",
-                Description = $"Book{i:D4} Description",
-                Price = (short)(i + 1),
-                ImageUrl = $"Image{i:D4}",
-                PublishedOn = new DateOnly(startYear + i, 1,1),
-                Reviews = reviews,
-                Authors = authors
-            };
-
-            result.Add(new BookTop{BookData = bookData});
-        }
-
-        return result;
+        return CreateSqlBookData.CreateSqlDummyBooks(numBooks, commonAuthorRatio).ConvertSqlBookToJsonBook();
     }
+
 }

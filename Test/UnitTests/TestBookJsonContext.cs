@@ -3,6 +3,7 @@
 
 using DataLayer.JsonBookClasses;
 using DataLayer.JsonBookEfCore;
+using Test.MappingCode;
 using Test.TestHelpers;
 using TestSupport.EfHelpers;
 using Xunit.Abstractions;

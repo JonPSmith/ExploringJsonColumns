@@ -2,8 +2,9 @@
 // Licensed under MIT license. See License.txt in the project root for license information.
 
 using DataLayer.SqlBookClasses;
+using Test.Dtos;
 
-namespace Test.TestHelpers;
+namespace Test.MappingCode;
 
 public static class MapSqlBooks
 {

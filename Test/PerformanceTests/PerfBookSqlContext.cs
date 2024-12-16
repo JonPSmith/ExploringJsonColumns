@@ -2,6 +2,8 @@
 // Licensed under MIT license. See License.txt in the project root for license information.
 
 using DataLayer.SqlBookEfCore;
+using Test.Dtos;
+using Test.MappingCode;
 using Test.TestHelpers;
 using TestSupport.EfHelpers;
 using Xunit.Abstractions;
@@ -24,7 +26,7 @@ public class PerfBookSqlContext
         var options = this.CreateUniqueClassOptions<SqlBookContext>();
         using var context = new SqlBookContext(options);
         context.Database.EnsureClean();
-        var dummyBooks = CreateSqlBookData.CreateDummyBooks(numBooks);
+        var dummyBooks = CreateSqlBookData.CreateSqlDummyBooks(numBooks);
 
         //ATTEMPT
         using (new TimeThings(_output, $"Add {numBooks} Sql Books."))
@@ -47,7 +49,7 @@ public class PerfBookSqlContext
         var options = this.CreateUniqueClassOptions<SqlBookContext>();
         using var context = new SqlBookContext(options);
         context.Database.EnsureClean();
-        var dummyBooks = CreateSqlBookData.CreateDummyBooks(numBooks);
+        var dummyBooks = CreateSqlBookData.CreateSqlDummyBooks(numBooks);
         context.Books.AddRange(dummyBooks);
         context.SaveChanges();
 
@@ -72,7 +74,7 @@ public class PerfBookSqlContext
         var options = this.CreateUniqueClassOptions<SqlBookContext>();
         using var context = new SqlBookContext(options);
         context.Database.EnsureClean();
-        var dummyBooks = CreateSqlBookData.CreateDummyBooks(numBooks);
+        var dummyBooks = CreateSqlBookData.CreateSqlDummyBooks(numBooks);
         context.Books.AddRange(dummyBooks);
         context.SaveChanges();
         context.ChangeTracker.Clear();
@@ -91,5 +93,29 @@ public class PerfBookSqlContext
             ((book.ReviewsAverageVotes ?? 0) >= lastStar).ShouldBeTrue($"{book.Title}");
             lastStar = book.ReviewsAverageVotes ?? 0;
         }
+    }
+
+    [Theory]
+    [InlineData(100)]
+    [InlineData(1000)]
+    public void FindAuthorsBooks(int numBooks)
+    {
+        //SETUP
+        var options = this.CreateUniqueClassOptions<SqlBookContext>();
+        using var context = new SqlBookContext(options);
+        context.Database.EnsureClean();
+        var dummyBooks = CreateSqlBookData.CreateSqlDummyBooks(numBooks);
+        context.Books.AddRange(dummyBooks);
+        context.SaveChanges();
+        context.ChangeTracker.Clear();
+
+        //ATTEMPT
+        string[] bookTitles;
+        using (new TimeThings(_output, $"FindAuthorsBooks {numBooks} Sql Books."))
+        {
+            bookTitles = context.Books.MapBooksByAuthor("CommonAuthor0009").ToArray();
+        }
+
+        bookTitles.Count().ShouldEqual(10);
     }
 }

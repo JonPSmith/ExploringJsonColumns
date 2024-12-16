@@ -31,10 +31,4 @@ public class JsonBookData
     /// Reviews can be null
     /// </summary>
     public List<JsonReview> Reviews { get; set; }
-
-    //=================================================
-    //Useful methods
-
-    public double StarsValue() => Reviews == null || Reviews.Count == 0 
-        ? 0 : Reviews.Sum(x => x.NumStars) / Reviews.Count;
 }

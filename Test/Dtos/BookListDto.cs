@@ -1,11 +1,11 @@
 ﻿// Copyright (c) 2024 Jon P Smith, GitHub: JonPSmith, web: http://www.thereformedprogrammer.net/
 // Licensed under MIT license. See License.txt in the project root for license information.
 
-namespace Test.TestHelpers;
+namespace Test.Dtos;
 
 public class BookListDto
 {
-    public int BookId { get; set; } 
+    public int BookId { get; set; }
     public string Title { get; set; }
     public DateOnly PublishedOn { get; set; }
     public decimal Price { get; set; }
@@ -23,5 +23,5 @@ public class BookListDto
     //                     $"Review stars: {(BookData.Reviews == null || !BookData.Reviews.Any() ? "No reviews"
     //                         : BookData.Reviews.Average(x => x.NumStars).ToString("F"))} ";
     //     return result;
-    // }
+    //}
 }

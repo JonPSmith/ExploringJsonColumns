@@ -10,10 +10,16 @@ public static class CreateSqlBookData
 {
     public static readonly DateOnly DummyBookStartDate = new DateOnly(2010, 1, 1);
 
-    public static List<Book> CreateDummyBooks(int numBooks = 10)
+    /// <summary>
+    /// Creates dummy books
+    /// </summary>
+    /// <param name="numBooks">number of books to return</param>
+    /// <param name="commonAuthorRatio">This creates a CommonAuthor every numBooks / commonAuthorRatio</param>
+    /// <returns></returns>
+    public static List<Book> CreateSqlDummyBooks(int numBooks, int commonAuthorRatio = 10)
     {
         var result = new List<Book>();
-        
+
         for (int i = 0; i < numBooks; i++)
         {
             var reviews = new List<Review>();
@@ -31,10 +37,13 @@ public static class CreateSqlBookData
                 Reviews = reviews
             };
 
+            //This creates a new commonAuthor
+            var commonAuthor = $"CommonAuthor{((int)(i / commonAuthorRatio)):D4}";
+
             book.AuthorsLink = new List<BookAuthor>() 
             {
                 new BookAuthor {Book = book, Author = new Author { Name = $"Author{i:D4}"}},
-                new BookAuthor {Book = book, Author = new Author {Name = "commonAuthor"}},
+                new BookAuthor {Book = book, Author = new Author {Name = commonAuthor}},
             };
 
             result.Add(book);

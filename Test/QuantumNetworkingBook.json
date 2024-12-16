@@ -1,0 +1,29 @@
+{
+  "Description": "Entangled quantum networking provides faster-than-light data communications",
+  "ImageUrl": null,
+  "Price": 220,
+  "PublishedOn": "2057-01-01",
+  "Publisher": null,
+  "Title": "Quantum Networking",
+  "Authors": [
+    {
+      "AuthorName": "Future Person"
+    }
+  ],
+  "Promotion": {
+    "NewPrice": 219,
+    "PromotionalText": "Save $1 if you order 40 years ahead!"
+  },
+  "Reviews": [
+    {
+      "Comment": "I look forward to reading this book, if I am still alive!",
+      "NumStars": 5,
+      "VoterName": "Jon P Smith"
+    },
+    {
+      "Comment": "I write this book if I was still alive!",
+      "NumStars": 5,
+      "VoterName": "Albert Einstein"
+    }
+  ]
+}
