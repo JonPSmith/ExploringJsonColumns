@@ -20,7 +20,7 @@ public class PerfBookJsonContext
     [Theory]
     [InlineData(100)]
     [InlineData(1000)]
-    public void TestBookJsonContext_AddMany(int numBooks)
+    public void TestBookJsonContext_AddBooks(int numBooks)
     {
         //SETUP
         var logs = new List<string>();

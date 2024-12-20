@@ -62,11 +62,12 @@ public static class CreateJsonBookData
     /// Creates dummy books
     /// </summary>
     /// <param name="numBooks">number of books to return</param>
+    /// <param name="maxReviews">The number of reviews goes to 0 to maxReviews before starting again</param>
     /// <param name="commonAuthorRatio">This creates a CommonAuthor every numBooks / commonAuthorRatio</param>
     /// <returns></returns>
-    public static List<BookTop> CreateJsonDummyBooks(int numBooks, int commonAuthorRatio = 10)
+    public static List<BookTop> CreateJsonDummyBooks(int numBooks, int maxReviews = 50, int commonAuthorRatio = 10)
     {
-        return CreateSqlBookData.CreateSqlDummyBooks(numBooks, commonAuthorRatio).ConvertSqlBookToJsonBook();
+        return CreateSqlBookData.CreateSqlDummyBooks(numBooks, maxReviews, commonAuthorRatio).ConvertSqlBookToJsonBook();
     }
 
 }

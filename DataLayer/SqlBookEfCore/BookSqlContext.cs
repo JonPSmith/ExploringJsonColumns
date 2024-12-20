@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataLayer.SqlBookEfCore;
 
-public class SqlBookContext : DbContext
+public class BookSqlContext : DbContext
 {
-    public SqlBookContext(DbContextOptions<SqlBookContext> options)
+    public BookSqlContext(DbContextOptions<BookSqlContext> options)
         : base(options) { }
 
     public DbSet<Book> Books { get; set; }

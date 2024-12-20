@@ -3,7 +3,6 @@
 
 using DataLayer.SqlBookClasses;
 using DataLayer.SqlBookEfCore;
-using Microsoft.EntityFrameworkCore;
 using Test.MappingCode;
 using Test.TestHelpers;
 using TestSupport.EfHelpers;
@@ -22,8 +21,8 @@ public class TestBookSqlContext
     public void BasicTestSqlBookContext()
     {
         //SETUP
-        var options = this.CreateUniqueClassOptions<SqlBookContext>();
-        using var context = new SqlBookContext(options);
+        var options = this.CreateUniqueClassOptions<BookSqlContext>();
+        using var context = new BookSqlContext(options);
         context.Database.EnsureClean();
 
         //ATTEMPT
@@ -39,8 +38,8 @@ public class TestBookSqlContext
     public void TestSqlBookContext_FourBooksAllData()
     {
         //SETUP
-        var options = this.CreateUniqueClassOptions<SqlBookContext>();
-        using var context = new SqlBookContext(options);
+        var options = this.CreateUniqueClassOptions<BookSqlContext>();
+        using var context = new BookSqlContext(options);
         context.Database.EnsureClean();
 
         //ATTEMPT

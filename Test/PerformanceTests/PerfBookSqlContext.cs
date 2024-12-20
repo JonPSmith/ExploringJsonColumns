@@ -23,8 +23,8 @@ public class PerfBookSqlContext
     public void TestSqlBookContext_AddBooks(int numBooks)
     {
         //SETUP
-        var options = this.CreateUniqueClassOptions<SqlBookContext>();
-        using var context = new SqlBookContext(options);
+        var options = this.CreateUniqueClassOptions<BookSqlContext>();
+        using var context = new BookSqlContext(options);
         context.Database.EnsureClean();
         var dummyBooks = CreateSqlBookData.CreateSqlDummyBooks(numBooks);
 
@@ -46,8 +46,8 @@ public class PerfBookSqlContext
     public void TestSqlBookContext_ReadBooks(int numBooks)
     {
         //SETUP
-        var options = this.CreateUniqueClassOptions<SqlBookContext>();
-        using var context = new SqlBookContext(options);
+        var options = this.CreateUniqueClassOptions<BookSqlContext>();
+        using var context = new BookSqlContext(options);
         context.Database.EnsureClean();
         var dummyBooks = CreateSqlBookData.CreateSqlDummyBooks(numBooks);
         context.Books.AddRange(dummyBooks);
@@ -71,8 +71,8 @@ public class PerfBookSqlContext
     public void TestSqlBookContext_OrderByStars(int numBooks)
     {
         //SETUP
-        var options = this.CreateUniqueClassOptions<SqlBookContext>();
-        using var context = new SqlBookContext(options);
+        var options = this.CreateUniqueClassOptions<BookSqlContext>();
+        using var context = new BookSqlContext(options);
         context.Database.EnsureClean();
         var dummyBooks = CreateSqlBookData.CreateSqlDummyBooks(numBooks);
         context.Books.AddRange(dummyBooks);
@@ -98,11 +98,11 @@ public class PerfBookSqlContext
     [Theory]
     [InlineData(100)]
     [InlineData(1000)]
-    public void FindAuthorsBooks(int numBooks)
+    public void TestSqlBookContext_FindAuthorsBooks(int numBooks)
     {
         //SETUP
-        var options = this.CreateUniqueClassOptions<SqlBookContext>();
-        using var context = new SqlBookContext(options);
+        var options = this.CreateUniqueClassOptions<BookSqlContext>();
+        using var context = new BookSqlContext(options);
         context.Database.EnsureClean();
         var dummyBooks = CreateSqlBookData.CreateSqlDummyBooks(numBooks);
         context.Books.AddRange(dummyBooks);

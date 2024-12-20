@@ -1,7 +1,6 @@
 ﻿// Copyright (c) 2024 Jon P Smith, GitHub: JonPSmith, web: http://www.thereformedprogrammer.net/
 // Licensed under MIT license. See License.txt in the project root for license information.
 
-using Azure;
 using DataLayer.SqlBookClasses;
 
 namespace Test.TestHelpers;
@@ -14,16 +13,17 @@ public static class CreateSqlBookData
     /// Creates dummy books
     /// </summary>
     /// <param name="numBooks">number of books to return</param>
+    /// <param name="maxReviews">The number of reviews goes to 0 to maxReviews before starting again</param>
     /// <param name="commonAuthorRatio">This creates a CommonAuthor every numBooks / commonAuthorRatio</param>
     /// <returns></returns>
-    public static List<Book> CreateSqlDummyBooks(int numBooks, int commonAuthorRatio = 10)
+    public static List<Book> CreateSqlDummyBooks(int numBooks, int maxReviews = 50, int commonAuthorRatio = 10)
     {
         var result = new List<Book>();
 
         for (int i = 0; i < numBooks; i++)
         {
             var reviews = new List<Review>();
-            for (int j = 0; j < i; j++)
+            for (int j = 0; j < (i % maxReviews) ; j++)
             {
                 reviews.Add(new Review { VoterName = j.ToString(), NumStars = (j % 5) + 1 });
             }
