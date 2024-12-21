@@ -72,4 +72,50 @@ public class TestCreateJsonDummyBooks
             _output.WriteLine($"{j:D}, CommonAuthorName = {books[j].AuthorsLink.Last().Author.Name}");
         }
     }
+
+    [Fact]
+    public void TestCreateJsonDummyBooks_CheckPromotions()
+    {
+        //SETUP
+        var options = this.CreateUniqueClassOptions<BookSqlContext>();
+        using var context = new BookSqlContext(options);
+        context.Database.EnsureClean();
+
+        //ATTEMPT
+        var books = CreateSqlBookData.CreateSqlDummyBooks(12, 4, 6, 3);
+
+        //VERIFY
+        books.Count.ShouldEqual(12);
+        books.Count(x => x.Promotion != null).ShouldEqual(4);
+        foreach (var book in books)
+        {
+            if (book.Promotion != null)
+                _output.WriteLine($"{book.Title}: Price was {book.Price}, but is now {book.Promotion.NewPrice}");
+        }
+    }
+
+    [Theory]
+    [InlineData(100)]
+    [InlineData(1000)]
+    public void TestCreateJsonDummyBooks_CountBooksParts(int numBooks)
+    {
+        //SETUP
+        var options = this.CreateUniqueClassOptions<BookSqlContext>();
+        using var context = new BookSqlContext(options);
+        context.Database.EnsureClean();
+
+        //ATTEMPT
+        var books = CreateSqlBookData.CreateSqlDummyBooks(numBooks);
+
+        //VERIFY
+        _output.WriteLine($"{numBooks} books");
+        var reviewsCount = 0;
+        foreach (var book in books)
+        {
+            reviewsCount += (book.Reviews?.Count ?? 0);
+        }
+        _output.WriteLine($"{reviewsCount} Reviews");
+        _output.WriteLine($"{books.Count(x => x.Promotion != null)} Promotions");
+
+    }
 }

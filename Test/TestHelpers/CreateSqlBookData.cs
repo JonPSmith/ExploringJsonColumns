@@ -15,8 +15,10 @@ public static class CreateSqlBookData
     /// <param name="numBooks">number of books to return</param>
     /// <param name="maxReviews">The number of reviews goes to 0 to maxReviews before starting again</param>
     /// <param name="commonAuthorRatio">This creates a CommonAuthor every numBooks / commonAuthorRatio</param>
+    /// <param name="promotionEvery">A Promotion will be added every this value</param>
     /// <returns></returns>
-    public static List<Book> CreateSqlDummyBooks(int numBooks, int maxReviews = 50, int commonAuthorRatio = 10)
+    public static List<Book> CreateSqlDummyBooks(int numBooks, 
+        int maxReviews = 50, int commonAuthorRatio = 10, int promotionEvery = 10)
     {
         var result = new List<Book>();
 
@@ -34,9 +36,16 @@ public static class CreateSqlBookData
                 Price = (short)(i + 1),
                 ImageUrl = $"Image{i:D4}",
                 PublishedOn = DummyBookStartDate.AddYears(i),
-                Reviews = reviews
+                Reviews = reviews,
             };
-
+            //Adds a Promotion every "promotionEvery"
+            if ((i % promotionEvery) == 0)
+                book.Promotion = new PriceOffer
+                {
+                    NewPrice = book.Price / ((decimal)2.0),
+                    PromotionalText = "half price today!",
+                };
+    
             //This creates a new commonAuthor
             var commonAuthor = $"CommonAuthor{((int)(i / commonAuthorRatio)):D4}";
 
