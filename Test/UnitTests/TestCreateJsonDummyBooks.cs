@@ -2,6 +2,7 @@
 // Licensed under MIT license. See License.txt in the project root for license information.
 
 using DataLayer.SqlBookEfCore;
+using Test.MappingCode;
 using Test.TestHelpers;
 using TestSupport.EfHelpers;
 using Xunit.Abstractions;
@@ -37,9 +38,6 @@ public class TestCreateJsonDummyBooks
     public void TestCreateJsonDummyBooks_CheckReviews()
     {
         //SETUP
-        var options = this.CreateUniqueClassOptions<BookSqlContext>();
-        using var context = new BookSqlContext(options);
-        context.Database.EnsureClean();
 
         //ATTEMPT
         var books = CreateSqlBookData.CreateSqlDummyBooks(12, 4);
@@ -77,9 +75,6 @@ public class TestCreateJsonDummyBooks
     public void TestCreateJsonDummyBooks_CheckPromotions()
     {
         //SETUP
-        var options = this.CreateUniqueClassOptions<BookSqlContext>();
-        using var context = new BookSqlContext(options);
-        context.Database.EnsureClean();
 
         //ATTEMPT
         var books = CreateSqlBookData.CreateSqlDummyBooks(12, 4, 6, 3);
@@ -100,20 +95,21 @@ public class TestCreateJsonDummyBooks
     public void TestCreateJsonDummyBooks_CountBooksParts(int numBooks)
     {
         //SETUP
-        var options = this.CreateUniqueClassOptions<BookSqlContext>();
-        using var context = new BookSqlContext(options);
-        context.Database.EnsureClean();
 
         //ATTEMPT
         var books = CreateSqlBookData.CreateSqlDummyBooks(numBooks);
 
         //VERIFY
         _output.WriteLine($"{numBooks} books");
+        var commonAuthors = 0;
         var reviewsCount = 0;
         foreach (var book in books)
         {
+            if (book.AuthorsLink.Any(x => x.Author.Name == "CommonAuthor0009"))
+            { commonAuthors++; }
             reviewsCount += (book.Reviews?.Count ?? 0);
         }
+        _output.WriteLine($"{commonAuthors} Authors books");
         _output.WriteLine($"{reviewsCount} Reviews");
         _output.WriteLine($"{books.Count(x => x.Promotion != null)} Promotions");
 

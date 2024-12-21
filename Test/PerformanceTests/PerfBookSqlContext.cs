@@ -29,7 +29,7 @@ public class PerfBookSqlContext
         var dummyBooks = CreateSqlBookData.CreateSqlDummyBooks(numBooks);
 
         //ATTEMPT
-        using (new TimeThings(_output, $"Add {numBooks} Sql Books."))
+        using (new TimeThings(_output, $"Add Sql Books.", numBooks))
         {
             context.Books.AddRange(dummyBooks);
             context.SaveChanges();
@@ -55,7 +55,7 @@ public class PerfBookSqlContext
 
         //ATTEMPT
         BookListDto[] books;
-        using (new TimeThings(_output, $"Read {numBooks} Sql Books."))
+        using (new TimeThings(_output, $"Read Sql Books.", numBooks))
         {
             books = context.Books.MapBookToDto().ToArray();
         }
@@ -81,7 +81,7 @@ public class PerfBookSqlContext
 
         //ATTEMPT
         BookListDto[] books;
-        using (new TimeThings(_output, $"OrderByStars {numBooks} Sql Books."))
+        using (new TimeThings(_output, $"OrderByStars Sql Books.", numBooks))
         {
             books = context.Books.MapBookToDto().OrderBy(x => x.ReviewsAverageVotes).ToArray();
         }
@@ -111,7 +111,7 @@ public class PerfBookSqlContext
 
         //ATTEMPT
         string[] bookTitles;
-        using (new TimeThings(_output, $"FindAuthorsBooks {numBooks} Sql Books."))
+        using (new TimeThings(_output, $"FindAuthorsBooks Sql Books.", numBooks))
         {
             bookTitles = context.Books.MapBooksByAuthor("CommonAuthor0009").ToArray();
         }

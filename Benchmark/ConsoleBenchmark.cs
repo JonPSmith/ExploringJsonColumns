@@ -40,7 +40,7 @@ public class ConsoleBenchmark
         return builder.Options;
     }
 
-    [Params(100)]
+    [Params(100, 1000)]
     public int NumBooks;
 
 
@@ -54,22 +54,50 @@ public class ConsoleBenchmark
         _readJsonContext.Database.EnsureDeleted();
         _readJsonContext.Database.EnsureCreated();
         _readJsonContext.Books.AddRange(CreateJsonBookData.CreateJsonDummyBooks(NumBooks));
+
     }
 
     [Benchmark]
     public void ReadSql()
     {
+        _readSqlContext.ChangeTracker.Clear();
         var books = _readSqlContext.Books.MapBookToDto().ToArray();
-
     }
 
     [Benchmark]
     public void ReadJson()
     {
-
+        _readJsonContext.ChangeTracker.Clear();
         var books = _readJsonContext.Books.MapBookTopToDto().ToList();
     }
 
+    [Benchmark]
+    public void OrderSql()
+    {
+        _readSqlContext.ChangeTracker.Clear();
+        var books = _readSqlContext.Books.MapBookToDto().OrderBy(x => x.ReviewsAverageVotes).ToArray();
+    }
+
+    [Benchmark]
+    public void OrderJson()
+    {
+        _readJsonContext.ChangeTracker.Clear();
+        var books = _readJsonContext.Books.MapBookTopToDto().OrderBy(x => x.ReviewsAverageVotes).ToArray();
+    }
+
+    [Benchmark]
+    public void AuthorSql()
+    {
+        _readSqlContext.ChangeTracker.Clear();
+        var books = _readSqlContext.Books.MapBooksByAuthor("CommonAuthor0009").ToArray();
+    }
+
+    [Benchmark]
+    public void AuthorJson()
+    {
+        _readJsonContext.ChangeTracker.Clear();
+        var books = _readJsonContext.Books.MapBooksByAuthor("CommonAuthor0009").ToList();
+    }
 }
 
 public class AntiVirusFriendlyConfig : ManualConfig

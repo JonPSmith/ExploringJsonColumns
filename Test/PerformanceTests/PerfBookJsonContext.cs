@@ -30,7 +30,7 @@ public class PerfBookJsonContext
         var dummyBooks = CreateJsonBookData.CreateJsonDummyBooks(numBooks);
 
         //ATTEMPT
-        using (new TimeThings(_output, $"Add {numBooks} Json Books"))
+        using (new TimeThings(_output, $"Add Json Books", numBooks))
         {
             context.Books.AddRange(dummyBooks);
             context.SaveChanges();
@@ -56,7 +56,7 @@ public class PerfBookJsonContext
 
         //ATTEMPT
         List<BookListDto> books;
-        using (new TimeThings(_output, $"Read {numBooks} Json Books"))
+        using (new TimeThings(_output, $"Read Json Books", numBooks))
         {
             books = context.Books.MapBookTopToDto().ToList();
         }
@@ -82,7 +82,7 @@ public class PerfBookJsonContext
 
         //ATTEMPT
         List<BookListDto> bookDtos;
-        using (new TimeThings(_output, $"OrderByStars {numBooks} Json Books"))
+        using (new TimeThings(_output, $"OrderByStars Json Books", numBooks))
         {
             bookDtos = context.Books.MapBookTopToDto().ToList().OrderBy(x => x.ReviewsAverageVotes).ToList();
         }
@@ -115,7 +115,7 @@ public class PerfBookJsonContext
 
         //ATTEMPT
         List<string> bookTitles;
-        using (new TimeThings(_output, $"FindAuthorsBooks {numBooks} Json Books"))
+        using (new TimeThings(_output, $"FindAuthorsBooks Json Books", numBooks))
         {
             bookTitles = context.Books.MapBooksByAuthor("CommonAuthor0009").ToList();
         }
