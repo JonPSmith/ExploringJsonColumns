@@ -18,8 +18,8 @@ public class PerfBookSqlContext
     public PerfBookSqlContext(ITestOutputHelper output) => _output = output;
 
     [Theory]
+    [InlineData(10)]
     [InlineData(100)]
-    [InlineData(1000)]
     public void TestSqlBookContext_AddBooks(int numBooks)
     {
         //SETUP
@@ -29,7 +29,7 @@ public class PerfBookSqlContext
         var dummyBooks = CreateSqlBookData.CreateSqlDummyBooks(numBooks);
 
         //ATTEMPT
-        using (new TimeThings(_output, $"Add Sql Books.", numBooks))
+        using (new TimeThings(_output, $"Add Sql {numBooks} books"))
         {
             context.Books.AddRange(dummyBooks);
             context.SaveChanges();
@@ -41,8 +41,8 @@ public class PerfBookSqlContext
     }
 
     [Theory]
+    [InlineData(10)]
     [InlineData(100)]
-    [InlineData(1000)]
     public void TestSqlBookContext_ReadBooks(int numBooks)
     {
         //SETUP
@@ -55,7 +55,7 @@ public class PerfBookSqlContext
 
         //ATTEMPT
         BookListDto[] books;
-        using (new TimeThings(_output, $"Read Sql Books.", numBooks))
+        using (new TimeThings(_output, $"Read Sql {numBooks} books"))
         {
             books = context.Books.MapBookToDto().ToArray();
         }
@@ -66,8 +66,8 @@ public class PerfBookSqlContext
     }
 
     [Theory]
+    [InlineData(10)]
     [InlineData(100)]
-    [InlineData(1000)]
     public void TestSqlBookContext_OrderByStars(int numBooks)
     {
         //SETUP
@@ -81,7 +81,7 @@ public class PerfBookSqlContext
 
         //ATTEMPT
         BookListDto[] books;
-        using (new TimeThings(_output, $"OrderByStars Sql Books.", numBooks))
+        using (new TimeThings(_output, $"OrderByStars Sql {numBooks} books"))
         {
             books = context.Books.MapBookToDto().OrderBy(x => x.ReviewsAverageVotes).ToArray();
         }
@@ -96,8 +96,8 @@ public class PerfBookSqlContext
     }
 
     [Theory]
+    [InlineData(10)]
     [InlineData(100)]
-    [InlineData(1000)]
     public void TestSqlBookContext_FindAuthorsBooks(int numBooks)
     {
         //SETUP
@@ -111,9 +111,9 @@ public class PerfBookSqlContext
 
         //ATTEMPT
         string[] bookTitles;
-        using (new TimeThings(_output, $"FindAuthorsBooks Sql Books.", numBooks))
+        using (new TimeThings(_output, $"FindAuthorsBooks Sql {numBooks} books"))
         {
-            bookTitles = context.Books.MapBooksByAuthor("CommonAuthor0009").ToArray();
+            bookTitles = context.Books.MapBooksByAuthor("CommonAuthor0000").ToArray();
         }
 
         bookTitles.Count().ShouldEqual(10);

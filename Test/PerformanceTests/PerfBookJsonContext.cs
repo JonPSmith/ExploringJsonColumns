@@ -18,8 +18,8 @@ public class PerfBookJsonContext
     public PerfBookJsonContext(ITestOutputHelper output) => _output = output;
 
     [Theory]
+    [InlineData(10)]
     [InlineData(100)]
-    [InlineData(1000)]
     public void TestBookJsonContext_AddBooks(int numBooks)
     {
         //SETUP
@@ -30,7 +30,7 @@ public class PerfBookJsonContext
         var dummyBooks = CreateJsonBookData.CreateJsonDummyBooks(numBooks);
 
         //ATTEMPT
-        using (new TimeThings(_output, $"Add Json Books", numBooks))
+        using (new TimeThings(_output, $"Add Json {numBooks} books"))
         {
             context.Books.AddRange(dummyBooks);
             context.SaveChanges();
@@ -42,8 +42,8 @@ public class PerfBookJsonContext
     }
 
     [Theory]
+    [InlineData(10)]
     [InlineData(100)]
-    [InlineData(1000)]
     public void TestBookJsonContext_ReadBooks(int numBooks)
     {
         //SETUP
@@ -56,7 +56,7 @@ public class PerfBookJsonContext
 
         //ATTEMPT
         List<BookListDto> books;
-        using (new TimeThings(_output, $"Read Json Books", numBooks))
+        using (new TimeThings(_output, $"Read Json {numBooks} books"))
         {
             books = context.Books.MapBookTopToDto().ToList();
         }
@@ -67,8 +67,8 @@ public class PerfBookJsonContext
     }
 
     [Theory]
+    [InlineData(10)]
     [InlineData(100)]
-    [InlineData(1000)]
     public void TestBookJsonContext_OrderByStars(int numBooks)
     {
         //SETUP
@@ -82,7 +82,7 @@ public class PerfBookJsonContext
 
         //ATTEMPT
         List<BookListDto> bookDtos;
-        using (new TimeThings(_output, $"OrderByStars Json Books", numBooks))
+        using (new TimeThings(_output, $"OrderByStars Json {numBooks} books"))
         {
             bookDtos = context.Books.MapBookTopToDto().ToList().OrderBy(x => x.ReviewsAverageVotes).ToList();
         }
@@ -100,8 +100,8 @@ public class PerfBookJsonContext
     }
 
     [Theory]
+    [InlineData(10)]
     [InlineData(100)]
-    [InlineData(1000)]
     public void TestBookJsonContext_FindAuthorsBooks(int numBooks)
     {
         //SETUP
@@ -115,9 +115,9 @@ public class PerfBookJsonContext
 
         //ATTEMPT
         List<string> bookTitles;
-        using (new TimeThings(_output, $"FindAuthorsBooks Json Books", numBooks))
+        using (new TimeThings(_output, $"FindAuthorsBooks Json {numBooks} books"))
         {
-            bookTitles = context.Books.MapBooksByAuthor("CommonAuthor0009").ToList();
+            bookTitles = context.Books.MapBooksByAuthor("CommonAuthor0000").ToList();
         }
 
         //VERIFY

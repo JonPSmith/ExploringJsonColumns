@@ -40,21 +40,50 @@ public class ConsoleBenchmark
         return builder.Options;
     }
 
-    [Params(100, 1000)]
+    private void CreateBooksAndSave(bool jsonApproach, bool simple)
+    {
+        if (jsonApproach)
+        {
+            _readJsonContext.ChangeTracker.Clear();
+
+            _readJsonContext.Database.EnsureDeleted();
+            _readJsonContext.Database.EnsureCreated();
+            
+            _readJsonContext.Books.AddRange(
+                simple
+                    ? CreateJsonBookData.CreateJsonDummyBooks(NumBooks, 0, 0, 0)
+                    : CreateJsonBookData.CreateJsonDummyBooks(NumBooks)
+                    );
+            _readJsonContext.SaveChanges();
+        }
+        else
+        {
+            _readSqlContext.ChangeTracker.Clear();
+
+            _readSqlContext.Database.EnsureDeleted();
+            _readSqlContext.Database.EnsureCreated();
+            _readSqlContext.Books.AddRange(
+                simple
+                    ? CreateSqlBookData.CreateSqlDummyBooks(NumBooks, 0, 0, 0)
+                    : CreateSqlBookData.CreateSqlDummyBooks(NumBooks)
+            );
+            _readSqlContext.SaveChanges();
+        }
+    }
+
+    [Params(10, 100)]
     public int NumBooks;
 
-
-    [GlobalSetup]
-    public void Setup()
+    [Benchmark]
+    public void AddSql()
     {
-        _readSqlContext.Database.EnsureDeleted();
-        _readSqlContext.Database.EnsureCreated();
-        _readSqlContext.Books.AddRange(CreateSqlBookData.CreateSqlDummyBooks(NumBooks));
+        CreateBooksAndSave(false, false); //Json
+    }
 
-        _readJsonContext.Database.EnsureDeleted();
-        _readJsonContext.Database.EnsureCreated();
-        _readJsonContext.Books.AddRange(CreateJsonBookData.CreateJsonDummyBooks(NumBooks));
-
+    [Benchmark]
+    public void AddJson()
+    {
+        CreateBooksAndSave(true, false); //Sql
     }
 
     [Benchmark]

@@ -7,28 +7,30 @@ namespace Test.TestHelpers;
 
 public static class CreateSqlBookData
 {
-    public static readonly DateOnly DummyBookStartDate = new DateOnly(2010, 1, 1);
+    private static readonly DateOnly DummyBookStartDate = new DateOnly(2010, 1, 1);
 
     /// <summary>
     /// Creates dummy books
     /// </summary>
     /// <param name="numBooks">number of books to return</param>
-    /// <param name="maxReviews">The number of reviews goes to 0 to maxReviews before starting again</param>
+    /// <param name="maxReviews">The number of reviews goes to 0 to maxReviews before starting again.
+    /// If 0 then no Reviews added</param>
     /// <param name="commonAuthorRatio">This creates a CommonAuthor every numBooks / commonAuthorRatio</param>
-    /// <param name="promotionEvery">A Promotion will be added every this value</param>
+    /// <param name="promotionEvery">A Promotion will be added every this value. If 0 then no Promotions added</param>
     /// <returns></returns>
     public static List<Book> CreateSqlDummyBooks(int numBooks, 
-        int maxReviews = 50, int commonAuthorRatio = 10, int promotionEvery = 10)
+        int maxReviews = 5, int commonAuthorRatio = 10, int promotionEvery = 10)
     {
         var result = new List<Book>();
 
         for (int i = 0; i < numBooks; i++)
         {
             var reviews = new List<Review>();
-            for (int j = 0; j < (i % maxReviews) ; j++)
-            {
-                reviews.Add(new Review { VoterName = j.ToString(), NumStars = (j % 5) + 1 });
-            }
+            if (maxReviews != 0)
+                for (int j = 0; j < (i % maxReviews) ; j++)
+                {
+                    reviews.Add(new Review { VoterName = j.ToString(), NumStars = (j % 5) + 1 });
+                }
             var book = new Book
             {
                 Title = $"Book{i:D4} Title",
@@ -39,21 +41,21 @@ public static class CreateSqlBookData
                 Reviews = reviews,
             };
             //Adds a Promotion every "promotionEvery"
-            if ((i % promotionEvery) == 0)
+            if (promotionEvery != 0 && (i % promotionEvery) == 0)
                 book.Promotion = new PriceOffer
                 {
                     NewPrice = book.Price / ((decimal)2.0),
                     PromotionalText = "half price today!",
                 };
-    
-            //This creates a new commonAuthor
-            var commonAuthor = $"CommonAuthor{((int)(i / commonAuthorRatio)):D4}";
-
-            book.AuthorsLink = new List<BookAuthor>() 
+            
+            var bookAuthors = new List<BookAuthor> 
+                { new BookAuthor { Book = book, Author = new Author { Name = $"Author{i:D4}" } } };
+            if (commonAuthorRatio != 0)
             {
-                new BookAuthor {Book = book, Author = new Author { Name = $"Author{i:D4}"}},
-                new BookAuthor {Book = book, Author = new Author {Name = commonAuthor}},
-            };
+                bookAuthors.Add(new BookAuthor { Book = book, Author = 
+                        new Author { Name = $"CommonAuthor{(i / commonAuthorRatio):D4}"}});
+            }
+            book.AuthorsLink = bookAuthors;
 
             result.Add(book);
         }
