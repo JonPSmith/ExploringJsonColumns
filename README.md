@@ -5,6 +5,7 @@
 ```text
 One Author per book
 10 books		| 100 books
+10 Authors		| 100 Authors
 0 Find book		| 0 Find book 
 0 Reviews		| 0 Reviews
 0 Promotions	| 0 Promotions
@@ -25,8 +26,8 @@ One Author per book
 ## 10, 100, 1,000: Complex
 
 ```text
-Two Authors per book
 10 books		| 100 books			| 1000 books
+20 Authors		| 200 Authors		| 2000 Authors
 10 Find book	| 10 Authors books	| 10 Authors books
 20 Reviews		| 200 Reviews		| 2000 Reviews
 1 Promotions	| 10 Promotions		| 100 Promotions
