@@ -77,13 +77,13 @@ public class ConsoleBenchmark
     [Benchmark]
     public void AddSql()
     {
-        CreateBooksAndSave(false, false); //Json
+        CreateBooksAndSave(false, true); //Json
     }
 
     [Benchmark]
     public void AddJson()
     {
-        CreateBooksAndSave(true, false); //Sql
+        CreateBooksAndSave(true, true); //Sql
     }
 
     [Benchmark]

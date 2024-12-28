@@ -7,7 +7,7 @@ namespace Test.TestHelpers;
 
 public static class CreateSqlBookData
 {
-    private static readonly DateOnly DummyBookStartDate = new DateOnly(2010, 1, 1);
+    private static readonly DateOnly DummyBookStartDate = new DateOnly(2024, 12, 1);
 
     /// <summary>
     /// Creates dummy books
@@ -37,7 +37,7 @@ public static class CreateSqlBookData
                 Description = $"Book{i:D4} Description",
                 Price = (short)(i + 1),
                 ImageUrl = $"Image{i:D4}",
-                PublishedOn = DummyBookStartDate.AddYears(i),
+                PublishedOn = DummyBookStartDate.AddDays(i),
                 Reviews = reviews,
             };
             //Adds a Promotion every "promotionEvery"

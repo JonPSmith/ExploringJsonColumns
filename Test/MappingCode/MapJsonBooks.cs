@@ -26,7 +26,8 @@ public static class MapJsonBooks
                 AuthorsOrdered = string.Join(", ", bookTop.BookData.Authors
                     .Select(x => x.AuthorName)),
                 ReviewsCount = bookTop.BookData.Reviews?.Count ?? 0,
-                ReviewsAverageVotes = bookTop.BookData.Reviews == null || !bookTop.BookData.Reviews.Any()
+                ReviewsAverageVotes = bookTop.BookData.Reviews == null 
+                                      || !bookTop.BookData.Reviews.Any()
                     ? null
                     : bookTop.BookData.Reviews.Average(x => x.NumStars)
             };

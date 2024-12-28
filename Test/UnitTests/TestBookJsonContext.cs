@@ -60,5 +60,4 @@ public class TestBookJsonContext
                               $"Reviews: {stars}");
         }
     }
-
 }

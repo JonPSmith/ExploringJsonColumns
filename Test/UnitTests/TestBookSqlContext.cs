@@ -53,10 +53,10 @@ public class TestBookSqlContext
         foreach (var dto in context.Books.MapBookToDto())
         {
             string stars = dto.ReviewsCount == 0
-                    ? "No reviews"
-                    : $"NumReviews: {dto.ReviewsCount}, Stars: { ((double) dto.ReviewsAverageVotes):0.00} ";
-                _output.WriteLine($"{dto.Title}, Price {dto.ActualPrice}, Authors: {dto.AuthorsOrdered}, " +
-                                  $"Reviews: {stars}");
+                ? "No reviews"
+                : $"NumReviews: {dto.ReviewsCount}, Stars: {((double)dto.ReviewsAverageVotes):0.00} ";
+            _output.WriteLine($"{dto.Title}, Price {dto.ActualPrice}, Authors: {dto.AuthorsOrdered}, " +
+                              $"Reviews: {stars}");
         }
     }
 }

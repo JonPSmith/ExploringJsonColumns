@@ -92,6 +92,7 @@ public class TestCreateJsonDummyBooks
     [Theory]
     [InlineData(10)]
     [InlineData(100)]
+    [InlineData(1000)]
     public void TestCreateJsonDummyBooks_CountBooksParts(int numBooks)
     {
         //SETUP
@@ -105,10 +106,14 @@ public class TestCreateJsonDummyBooks
         var reviewsCount = 0;
         foreach (var book in books)
         {
-            if (book.AuthorsLink.Any(x => x.Author.Name == "CommonAuthor0009"))
-            { commonAuthors++; }
+            if (book.AuthorsLink.Any(x => x.Author.Name == "CommonAuthor0000"))
+            {
+                commonAuthors++;
+            }
+
             reviewsCount += (book.Reviews?.Count ?? 0);
         }
+
         _output.WriteLine($"{commonAuthors} Authors books");
         _output.WriteLine($"{reviewsCount} Reviews");
         _output.WriteLine($"{books.Count(x => x.Promotion != null)} Promotions");
@@ -130,10 +135,14 @@ public class TestCreateJsonDummyBooks
         var reviewsCount = 0;
         foreach (var book in books)
         {
-            if (book.AuthorsLink.Any(x => x.Author.Name == "CommonAuthor0009"))
-            { commonAuthors++; }
+            if (book.AuthorsLink.Any(x => x.Author.Name == "CommonAuthor0000"))
+            {
+                commonAuthors++;
+            }
+
             reviewsCount += (book.Reviews?.Count ?? 0);
         }
+
         _output.WriteLine($"{commonAuthors} Authors books");
         _output.WriteLine($"{reviewsCount} Reviews");
         _output.WriteLine($"{books.Count(x => x.Promotion != null)} Promotions");
