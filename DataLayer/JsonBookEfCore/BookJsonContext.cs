@@ -6,12 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataLayer.JsonBookEfCore;
 
-public class BookJsonContext : DbContext
+public class BookJsonContext(DbContextOptions<BookJsonContext> options)
+    : DbContext(options)
 {
-    public BookJsonContext(
-        DbContextOptions<BookJsonContext> options)
-        : base(options) { }
-
     public DbSet<BookTop> Books { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

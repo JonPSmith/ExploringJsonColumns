@@ -1,6 +1,17 @@
 # ExploringJsonColumns 
 
-## 10, 100: Simple, only showing the tasks that work
+This solution was created to support of my article ["A detailed look at EF Core’s JSON Columns feature"](https://www.thereformedprogrammer.net/a-detailed-look-at-ef-cores-json-column-feature/#5-selecting-data-from-the-database). Read the article for more infomation.
+
+## Performance tests
+
+| Task name  | What is does |
+|------------|---------------|
+| 1. Add	 | Add N sample data to an empty SQL database |
+| 2. Read	 | Read N sample data from the SQL database |
+| 3. Order	 | Read N sample data and order the books using their star rating |
+| 4. Author	 | Find all the books that has a specific author’s name in the N sample data |
+
+### 10, 100: Simple, only showing the tasks that work
 
 ```text
 One Author per book
